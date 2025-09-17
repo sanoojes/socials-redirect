@@ -2,9 +2,9 @@ import redirects from "./redirects";
 
 function generateLinks() {
   return Object.entries(redirects)
-    .map(([path, { url, icon }]) => {
+    .map(([path, { icon }]) => {
       const name = path.slice(1).charAt(0).toUpperCase() + path.slice(2);
-      return `<li><a href="${url}" aria-label="Visit ${name}" rel="noopener noreferrer"><span class="icon">${
+      return `<li><a href="${path}" aria-label="Visit ${name}" rel="noopener noreferrer"><span class="icon">${
         icon ?? ""
       }</span> ${name}</a></li>`;
     })

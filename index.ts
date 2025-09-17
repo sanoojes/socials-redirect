@@ -12,11 +12,6 @@ await redis.connect();
 serve({
   port: Bun.env?.PORT ?? 3001,
   routes: {
-    "/robots.txt": new Response("User-agent: *\nDisallow:", {
-      status: 200,
-      headers: { "Content-Type": "text/plain" },
-    }),
-
     // count endpoint
     "/count": async () => {
       const counts: Record<string, string> = {};
@@ -39,14 +34,15 @@ serve({
     }),
 
     // dynamic redirect route
-    "/:path": async (req) => {
+    "/:path": async (req: Bun.BunRequest<"/:path">) => {
       const path = "/" + req.params.path;
       const target = redirects[path];
+
       if (target) {
         await redis.incr(`counter:${path}`);
         return new Response(null, {
           status: 301,
-          headers: { Location: target, "Cache-Control": "no-cache" },
+          headers: { Location: target.url, "Cache-Control": "no-cache" },
         });
       }
       return new Response(null, {
