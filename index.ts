@@ -17,15 +17,13 @@ serve({
       headers: { "Content-Type": "text/plain" },
     }),
 
-     "/favicon.ico": new Response(await Bun.file("./public/favicon.ico").bytes(), {
-      headers: {
-        "Content-Type": "image/x-icon",
-      },
-    }),
-
+    "/favicon.ico": new Response(
+      await Bun.file(new URL("./public/favicon.ico", import.meta.url)).bytes(),
+      { headers: { "Content-Type": "image/x-icon" } }
+    ),
     // count endpoint
     "/count": async () => {
-          const counts: Record<string, string> = {};
+      const counts: Record<string, string> = {};
       for (const path of Object.keys(redirects)) {
         counts[path] = (await redis.get(`counter:${path}`)) ?? "0";
       }
