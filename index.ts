@@ -53,12 +53,18 @@ serve({
           headers: { Location: target, "Cache-Control": "no-cache" },
         });
       }
-      return new Response("Not Found", { status: 404 });
+      return new Response(null, {
+        status: 302,
+        headers: { Location: "/" },
+      });
     },
   },
 
   fetch(req) {
-    return new Response("Not Found", { status: 404 });
+    return new Response(null, {
+      status: 302,
+      headers: { Location: "/" },
+    });
   },
 });
 
