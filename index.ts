@@ -11,20 +11,21 @@ await redis.connect();
 
 serve({
   port: Bun.env?.PORT ?? 3001,
-  async fetch(req) {
-    const url = new URL(req.url);
+  routes: {
+    "/robots.txt": new Response("User-agent: *\nDisallow:", {
+      status: 200,
+      headers: { "Content-Type": "text/plain" },
+    }),
 
-    // robots.txt
-    if (url.pathname === "/robots.txt") {
-      return new Response("User-agent: *\nDisallow:", {
-        status: 200,
-        headers: { "Content-Type": "text/plain" },
-      });
-    }
+     "/favicon.ico": new Response(await Bun.file("./public/favicon.ico").bytes(), {
+      headers: {
+        "Content-Type": "image/x-icon",
+      },
+    }),
 
-    // count endpoint for analytics
-    if (url.pathname === "/count") {
-      const counts: Record<string, string> = {};
+    // count endpoint
+    "/count": async () => {
+          const counts: Record<string, string> = {};
       for (const path of Object.keys(redirects)) {
         counts[path] = (await redis.get(`counter:${path}`)) ?? "0";
       }
@@ -32,26 +33,34 @@ serve({
         status: 200,
         headers: { "Content-Type": "application/json" },
       });
-    }
+    },
 
-    // redirect links
-    const target = redirects[url.pathname];
-    if (target) {
-      await redis.incr(`counter:${url.pathname}`);
-      return new Response(null, {
-        status: 301,
-        headers: { Location: target, "Cache-Control": "no-cache" },
-      });
-    }
-
-    // main page 
-    return new Response(html, {
+    // main page
+    "/": new Response(html, {
       status: 200,
       headers: {
         "Content-Type": "text/html",
         "X-Robots-Tag": "index, follow",
       },
-    });
+    }),
+
+    // dynamic redirect route
+    "/:path": async (req) => {
+      const path = "/" + req.params.path;
+      const target = redirects[path];
+      if (target) {
+        await redis.incr(`counter:${path}`);
+        return new Response(null, {
+          status: 301,
+          headers: { Location: target, "Cache-Control": "no-cache" },
+        });
+      }
+      return new Response("Not Found", { status: 404 });
+    },
+  },
+
+  fetch(req) {
+    return new Response("Not Found", { status: 404 });
   },
 });
 
