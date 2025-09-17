@@ -1,10 +1,12 @@
 import redirects from "./redirects";
 
 function generateLinks() {
-  return Object.keys(redirects)
-    .map((path) => {
+  return Object.entries(redirects)
+    .map(([path, { url, icon }]) => {
       const name = path.slice(1).charAt(0).toUpperCase() + path.slice(2);
-      return `<li><a href="${path}" aria-label="Visit ${name}" rel="noopener noreferrer">${name}</a></li>`;
+      return `<li><a href="${url}" aria-label="Visit ${name}" rel="noopener noreferrer"><span class="icon">${
+        icon ?? ""
+      }</span> ${name}</a></li>`;
     })
     .join("\n");
 }
@@ -21,59 +23,16 @@ const html = `<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
   <title>Social Links for Sanooj | Connect on Social Media</title>
-  <style>body { 
-  font-family: 'Geist','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center; 
-  min-height: 100vh; 
-  margin: 0; 
-  text-align: center; 
-  background-color: #12140e; 
-  color: #e2e3d8; 
-}
-h1 { 
-  margin-bottom: 2rem; 
-  font-size: 2.5rem; 
-  color: #e2e3d8; 
-}
-ul { 
-  list-style: none; 
-  padding: 0; 
-  display: flex; 
-  flex-wrap: wrap; 
-  gap: 1rem; 
-  justify-content: center;
-  max-width: 80vw;
-}
-li { 
-  flex: 1 1 min(150px, 14vw);
-}
-a { 
-  display: block;
-  background-color: #404a33;
-  color: #dce7c8; 
-  text-decoration: none; 
-  font-weight: bold; 
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  transition: all 0.2s ease;
-}
-a:hover, a:focus { 
-  transform: translateY(-4px);
-  color: #404a33;
-  background-color: #dce7c8; 
-  box-shadow: 0 8px 12px rgba(0,0,0,0.5);
-  text-decoration: none;
-  outline: none;
-}
-footer {
-  margin-top: 3rem;
-  font-size: 0.9rem;
-  color: #c5c8ba;
-}</style>
+  <style>
+    body { font-family: 'Geist', sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; background-color: #12140e; color: #e2e3d8;}
+    h1 { margin-bottom: 2rem; font-size: 2.5rem; color: #e2e3d8; }
+    ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; max-width: 80vw; }
+    li { flex: 1; min-width: fit-content; width: 20%; max-width: 100%; }
+    a { display: flex; justify-content: center; align-items: center; gap: 8px; line-height: 1rem; background-color: #404a33;color: #dce7c8; text-decoration: none; font-weight: bold; padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);transition: all 0.2s ease; }
+    a:hover, a:focus { transform: translateY(-4px);color: #404a33;background-color: #dce7c8; box-shadow: 0 8px 12px rgba(0,0,0,0.5);text-decoration: none;outline: none;}
+    footer { margin-top: 3rem; font-size: 0.9rem; color: #c5c8ba; }
+    .icon { height: 1.5rem; width: 1.5rem; display: inline-block; vertical-align: middle;fill: currentColor;}
+  </style>
 </head>
 <body>
   <header>
