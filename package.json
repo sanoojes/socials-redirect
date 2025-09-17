@@ -1,0 +1,31 @@
+{
+  "name": "socials-redirect",
+  "version": "1.0.0",
+  "description": "Fast Bun server for redirecting to my socials",
+  "main": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run index.ts",
+    "dev": "bun run index.ts --watch"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "keywords": [
+    "bun",
+    "redirect",
+    "socials",
+    "server"
+  ],
+  "author": "sanoojes",
+  "license": "MIT",
+  "dependencies": {
+    "@upstash/redis": "^1.35.3",
+    "mongodb": "^6.19.0",
+    "redis": "^5.8.2"
+  }
+}
