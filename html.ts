@@ -25,25 +25,19 @@ const html = `<!DOCTYPE html>
   <title>Social Links for Sanooj | Connect on Social Media</title>
   <style>
     body { font-family: 'Geist', sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; background-color: #12140e; color: #e2e3d8;}
-    h1 { margin-bottom: 2rem; font-size: 2.5rem; color: #e2e3d8; }
+    h1 { margin-bottom: 1rem; font-size: 2.5rem; color: #e2e3d8; }
     ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; max-width: 80vw; }
-    li { flex: 1; min-width: fit-content; width: 20%; max-width: 100%; }
+    li { flex: 1 1 auto;min-width: 10rem;}
     a { display: flex; justify-content: center; align-items: center; gap: 8px; line-height: 1rem; background-color: #404a33;color: #dce7c8; text-decoration: none; font-weight: bold; padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);transition: all 0.2s ease; }
     a:hover, a:focus { transform: translateY(-4px);color: #404a33;background-color: #dce7c8; box-shadow: 0 8px 12px rgba(0,0,0,0.5);text-decoration: none;outline: none;}
-    footer { margin-top: 3rem; font-size: 0.9rem; color: #c5c8ba; }
-    .icon { height: 1.5rem; width: 1.5rem; display: inline-block; vertical-align: middle;fill: currentColor;}
+    footer { font-size: 0.9rem; color: #c5c8ba; }
+    .icon { height: 1.5rem; min-width:1.5rem; width: 1.5rem; margin-right:4px; display: inline-block; vertical-align: middle;fill: currentColor;}
   </style>
 </head>
 <body>
-  <header>
-    <h1>Social Links for Sanooj</h1>
-  </header>
-  <main>
-    <ul>${generateLinks()}</ul>
-  </main>
-  <footer>
-    <p>&copy; ${new Date().getFullYear()} Sanooj. All rights reserved.</p>
-  </footer>
+  <header><h1>Social Links for Sanooj</h1></header>
+  <main><ul>${generateLinks()}</ul></main>
+  <footer><p>&copy; ${new Date().getFullYear()} Sanooj. All rights reserved.</p></footer>
 </body>
 </html>`;
 
