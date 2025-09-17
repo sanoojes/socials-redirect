@@ -17,21 +17,6 @@ serve({
       headers: { "Content-Type": "text/plain" },
     }),
 
-    "/favicon.ico": async () => {
-      try {
-        const bytes = await Bun.file(new URL("./public/favicon.ico", import.meta.url)).bytes();
-        console.log(bytes);
-        
-        return new Response(bytes, {
-          status: 200,
-          headers: { "Content-Type": "image/x-icon" },
-        });
-      } catch (err) {
-        console.error("Favicon not found:", err);
-        return new Response("Not Found", { status: 404 });
-      }
-    },
-    
     // count endpoint
     "/count": async () => {
       const counts: Record<string, string> = {};
