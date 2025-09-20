@@ -24,6 +24,7 @@ const html = `<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4b131089085c49a0ba3f28cabaa20fa8"}'></script>
   <title>Social Links for Sanooj | Connect on Social Media</title>
   <style>
     body { font-family: 'Geist', sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; background-color: #12140e; color: #e2e3d8;}
