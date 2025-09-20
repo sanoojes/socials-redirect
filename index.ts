@@ -36,7 +36,7 @@ serve({
 
 		// dynamic redirect route
 		"/:path": async (req: Bun.BunRequest<"/:path">) => {
-			const path = `/${req.params.path}`;
+			const path = req.params.path;
 			const target = redirects[path];
 
 			if (target) {
