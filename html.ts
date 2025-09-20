@@ -3,14 +3,14 @@ import redirects from "./redirects";
 function generateLinks() {
 	return Object.entries(redirects)
 		.map(([path, { icon }]) => {
-			const name = (
-				path.slice(1).charAt(0).toUpperCase() + path.slice(2)
-			).replaceAll("-", " ");
-			return `<li><a href="${path}" aria-label="Visit ${name}" rel="noopener noreferrer"><span class="icon">${
-				icon ?? ""
-			}</span> ${name}</a></li>`;
+			const formattedName = path
+				.replace(/-/g, " ")
+				.replace(/\b\w/g, (c) => c.toUpperCase());
+
+			return `<li><a href="${path}" aria-label="Visit ${formattedName}" rel="noopener noreferrer">${icon ? `<span class="icon">${icon}</span>` : ""}<span class="link-text">${formattedName}</span></a></li>`;
 		})
-		.join("\n");
+		.join("\n")
+		.trim();
 }
 
 const html = `<!DOCTYPE html>
