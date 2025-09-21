@@ -1,14 +1,35 @@
 import { serve } from "bun";
-import Redis from "redis";
+import { createClient } from "redis";
 import html from "./html";
 import redirects from "./redirects";
 
 const PORT = Bun.env?.PORT ?? 3000;
+const REDIS_URL = process.env.REDIS_URL ?? "redis://localhost:6379";
 
-const redis = Redis.createClient({
-	url: process.env.REDIS_URL ?? "redis://localhost:6379",
+if (!process.env.REDIS_URL) {
+	console.warn("⚠️ Redis URL Missing in ENV. Falling back to localhost:6379");
+}
+
+const redis = createClient({
+	url: REDIS_URL,
+	socket: {
+		reconnectStrategy: (retries) => {
+			const base = 2000;
+			const maxDelay = 60000;
+			if (retries > 10) {
+				console.error("Too many Redis retries. Giving up.");
+				return new Error("Redis connection failed");
+			}
+			const delay = Math.min(base * 2 ** (retries - 1), maxDelay);
+			console.log(`Redis reconnect attempt #${retries}, waiting ${delay}ms`);
+			return delay;
+		},
+	},
 });
-await redis.connect();
+
+await redis.connect().catch((err) => {
+	console.error("Failed initial Redis connection:", err);
+});
 
 serve({
 	port: PORT,
