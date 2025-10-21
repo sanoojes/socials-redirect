@@ -1,2 +1,3 @@
 # socials-redirect
- Fast Bun server for redirecting to my socials."
+
+Static Webpage for redirecting to my socials.

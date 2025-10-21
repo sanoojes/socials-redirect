@@ -47,13 +47,17 @@ serve({
 		},
 
 		// main page
-		"/": new Response(html, {
-			status: 200,
-			headers: {
-				"Content-Type": "text/html",
-				"X-Robots-Tag": "index, follow",
-			},
-		}),
+		"/": () => {
+			console.log(html);
+
+			return new Response(html, {
+				status: 200,
+				headers: {
+					"Content-Type": "text/html",
+					"X-Robots-Tag": "index, follow",
+				},
+			});
+		},
 
 		// dynamic redirect route
 		"/:path": async (req: Bun.BunRequest<"/:path">) => {
